@@ -1,0 +1,23 @@
+{
+  "name": "Yes",
+  "version": "0.0.1",
+  "authors": [
+    "Jose Saldana <jose.saldana@solutionset.com>"
+  ],
+  "description": "Angular JS tutorial",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "angularjs": "~1.3.8",
+    "html5shiv": "~3.7.2",
+    "angular-mocks": "~1.3.8"
+  }
+}

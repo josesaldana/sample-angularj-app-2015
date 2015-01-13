@@ -1,0 +1,12 @@
+{
+  "framework": "jasmine",
+
+  "src_files": [
+    "app/components/angular/angular.js",
+    "app/components/angular-mocks/angular-mocks.js",
+    "app/*.js",
+    "tests/*.js"
+  ],
+
+  "launch_in_dev": [ "safari" ]
+}
