@@ -2,6 +2,30 @@
     "id": "al1",
     "title": "Album #1",
     "author": "Gary H. Tomlinson",
-    "cover": "album1.png",
-    "thumbnail": "album1-thumbnail.png"
+    "cover": "albums/al1.png",
+    "thumbnail": "al1-thumbnail.png"
+}, {
+    "id": "al2",
+    "title": "Album #2",
+    "author": "Gary H. Tomlinson",
+    "cover": "albums/al1.png",
+    "thumbnail": "al1-thumbnail.png"
+}, {
+    "id": "al3",
+    "title": "Album #3",
+    "author": "Gary H. Tomlinson",
+    "cover": "albums/al1.png",
+    "thumbnail": "al1-thumbnail.png"
+}, {
+    "id": "al4",
+    "title": "Album #4",
+    "author": "Gary H. Tomlinson",
+    "cover": "albums/al1.png",
+    "thumbnail": "al1-thumbnail.png"
+}, {
+    "id": "al5",
+    "title": "Album #5",
+    "author": "Gary H. Tomlinson",
+    "cover": "albums/al1.png",
+    "thumbnail": "al1-thumbnail.png"
 }]

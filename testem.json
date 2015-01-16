@@ -2,12 +2,14 @@
   "framework": "jasmine",
 
   "src_files": [
+    "app/components/jquery/dist/jquery.js",
     "app/components/angular/angular.js",
     "app/components/angular-mocks/angular-mocks.js",
     "app/components/angular-resource/angular-resource.js",
     "app/components/angular-ui-router/release/angular-ui-router.min.js",
     "app/*.js",
-    "tests/app_specs.js"
+    "tests/app_specs.js",
+    "tests/utils_specs.js"
   ],
 
   "src_files_ignore": [

@@ -1,0 +1,24 @@
+{
+  "id": "al2",
+  "title": "The Album #2",
+  "author": "The Author",
+  "cover": "albums/al1.png",
+  "description": "This is the description of the album.  This is the description of the album",
+  "tracks": [{
+    "id": "al2-tr1",
+    "title": "Track 1 of Album #2",
+    "number": 1,
+    "duration": "04:02",
+    "previewUrl": "audio/al2tr1.mp3"
+  }, {
+    "id": "al2-tr2",
+    "title": "Track 2 of Album #2",
+    "number": 2,
+    "duration": "03:10",
+    "previewUrl": "audio/al2tr2.mp3"
+  }],
+  "reviews": [{
+    "comment": "Excellent Album!",
+    "author": "jmsaldana@gmail.com"
+  }]
+}

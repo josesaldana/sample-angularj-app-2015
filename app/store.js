@@ -3,19 +3,18 @@
 angular.module('MusicStore', ['ngResource', 'ui.router'])
 
   .config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/")
+
     $stateProvider
-      .state('musicStore', {
-        url: '/',
-        templateUrl: 'app/templates/albums.html',
+      .state('index', {
+        url: "/",
+        templateUrl: "app/templates/all.html",
         controller: 'AlbumsController'
       })
-      .state('musicStore.album', {
-        url: '/album',
-        templateUrl: 'app/templates/album.html',
-        controller: 'AlbumDetailsController'
+      .state('index.album', {
+        url: "/album",
+        templateUrl: "app/templates/album.html"
       })
-
-    $urlRouterProvider.otherwise('/music-store')
   })
 
   .factory('Album', function($resource) {
@@ -25,6 +24,7 @@ angular.module('MusicStore', ['ngResource', 'ui.router'])
   })
 
   .controller('AlbumsController', function($scope, Album) {
+    // All albums
     $scope.albums = []
     $scope.showingDetails = false
 
@@ -32,19 +32,18 @@ angular.module('MusicStore', ['ngResource', 'ui.router'])
       $scope.albums = data
     });
 
+    // Album details
+    $scope.album = { tracks: [] }
+
     this.showDetails = function(albumId) {
-      $scope.showingDetails = true
+      $scope.showingDetails = $scope.selectedAlbum !== albumId || !$scope.showingDetails
       $scope.selectedAlbum = albumId
+
+      Album.get({id: $scope.selectedAlbum}, function(data) {
+        $scope.album = data
+      })
     }
 
     $scope.showDetails = this.showDetails
-  })
-
-  .controller('AlbumDetailsController', function($scope, Album) {
-    $scope.album = { tracks: [] }
-
-    Album.get({id: $scope.selectedAlbum}, function(data) {
-      $scope.album = data
-    })
   })
 

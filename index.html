@@ -12,16 +12,18 @@
         <script src="app/components/html5shiv/dist/html5shiv.min.js"></script>
     </head>
     <body ng-app="MusicStore">
-        <header>
+        <header class="col-xs-12">
           <hgroup>
             <h1>Music Store</h1>
+            <hr />
           </hgroup>
         </header>
 
-        <div ng-view=""></div>
+        <div ui-view=""> </div>
 
-        <footer>
-            MusicStore - by ADMIOS
+        <footer class="col-xs-12">
+          <hr />
+          <em>MusicStore - by ADMIOS</em>
         </footer>
 
         <script src="app/components/angularjs/angular.min.js"></script>

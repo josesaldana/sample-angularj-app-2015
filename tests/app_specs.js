@@ -20,6 +20,7 @@ describe("MusicStore", function() {
             $httpBackend.when('GET', '/albums/all.json').respond([{id: 'al1'}])
 
             var $scope = $rootScope.$new()
+            var $state = {}
             var controller = $controller('AlbumsController', {$scope: $scope, Album: Album})
 
             $httpBackend.flush()
@@ -34,38 +35,18 @@ describe("MusicStore", function() {
             var $scope = $rootScope.$new()
             var controller = $controller('AlbumsController', {$scope: $scope, Album: Album})
 
+            var album = {id: 'al1', tracks: [{ id: 'al1-tr1'}]}
+            $httpBackend.when('GET', '/albums/al1.json').respond(album)
+
             controller.showDetails('al1')
 
             expect($scope.showingDetails).toBe(true)
             expect($scope.selectedAlbum).toBe('al1')
-        })
-
-    })
-
-    describe("AlbumDetailsController", function() {
-
-        it("should get the details of an album", function() {
-            var al1 = {
-              id: 'al1', title: 'Album #1', 
-              tracks: [
-                {id: 'tr1', title: 'Song 1', number: 1}
-            ]}
-
-            $httpBackend.when('GET', '/albums/al1.json').respond(al1);
-
-            var $scope = $rootScope.$new()
-
-            // Inherited models
-            $scope.showingDetails = true
-            $scope.selectedAlbum = 'al1'
-
-            var controller = $controller('AlbumDetailsController', {$scope: $scope, Album: Album})
-
-            $httpBackend.flush()
 
             expect($scope.album.id).toBe('al1')
-            expect($scope.album.tracks.length).toBe(1)
-
+            expect($scope.album.tracks.lenght).toBe(1)
         })
+
     })
+
 })
