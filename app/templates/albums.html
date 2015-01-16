@@ -1,0 +1,11 @@
+<section id="albums">
+  <ul ng-repeat="album in albums">
+    <li class="album">
+      <a href ng-click="showDetails(album.id)">
+        <img ng-src="{{album.thumbnail}}">{{album.title}}
+      </a>
+    </li>
+  </ul>
+
+  <ng-view></ng-view>
+</section>

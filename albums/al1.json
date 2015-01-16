@@ -1,0 +1,10 @@
+{
+  "id": "al1",
+  "title": "Album #1",
+  "tracks": [{
+    "id": "tr1",
+    "title": "Track #1 of Album #1",
+    "number": 1,
+    "previewUrl": "audion/al1tr1.mp3"
+  }]
+}

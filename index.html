@@ -9,14 +9,24 @@
         <link rel="stylesheet" href="app/components/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="app/style.css" />
 
-        <!-- HTML5Shiv -->
         <script src="app/components/html5shiv/dist/html5shiv.min.js"></script>
     </head>
-    <body>
-        <!-- TODO: Start here -->
+    <body ng-app="MusicStore">
         <header>
+          <hgroup>
+            <h1>Music Store</h1>
+          </hgroup>
         </header>
 
+        <div ng-view=""></div>
+
+        <footer>
+            MusicStore - by ADMIOS
+        </footer>
+
         <script src="app/components/angularjs/angular.min.js"></script>
+        <script src="app/components/angular-resource/angular-resource.min.js"></script>
+        <script src="app/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="app/store.js"></script>
     </body>
 </html>

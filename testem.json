@@ -4,9 +4,16 @@
   "src_files": [
     "app/components/angular/angular.js",
     "app/components/angular-mocks/angular-mocks.js",
+    "app/components/angular-resource/angular-resource.js",
+    "app/components/angular-ui-router/release/angular-ui-router.min.js",
     "app/*.js",
-    "tests/*.js"
+    "tests/app_specs.js"
   ],
 
-  "launch_in_dev": [ "safari" ]
+  "src_files_ignore": [
+    "tests/protractor-conf.js",
+    "tests/app_scenarios.js"
+  ],
+
+  "launch_in_dev": [ "firefox" ]
 }

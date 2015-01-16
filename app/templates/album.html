@@ -1,0 +1,15 @@
+<section id="album-details">
+  <header>
+    <hgroup>
+      <h1>{{albuum.title}}</h1>
+      <h3>{{album.author}}</h3>
+    </hgroup>
+  </header>
+  <ul class="album-tracks" ng-repeat="track in album.tracks">
+    <li>{{track.title}} - {{track.duration}} <audio ng-src="{{track.previewUrl}}" /></li>
+  </ul>
+
+  <article class="album-summary">
+    <!-- TODO: To be added -->
+  </article>
+</section>

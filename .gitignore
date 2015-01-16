@@ -2,3 +2,5 @@
 app/components
 node_modules
 .idea
+*log*
+
