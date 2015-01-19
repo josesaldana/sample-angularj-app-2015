@@ -20,6 +20,7 @@ describe("MusicStore.Utils", function() {
       it("should generate markup for a custom HTML5 audio control", function() {
         expect(element.hasClass('audio-player')).toBe(true)
         expect(element.find('button').length).toBeGreaterThan(0)
+        expect(element.find('audio').length).toBe(1)
         expect(element.find('audio').attr('src')).toBe('albums/al1/al1tr1.mp3')
       })
     })
@@ -36,7 +37,7 @@ describe("MusicStore.Utils", function() {
         expect(audioEl.paused).toBe(false)
         expect(audioEl.ended).toBe(false)
 
-        expect(element.find('button').text()).toEqual('S')
+        expect(element.hasClass('playing')).toBe(true)
       })
 
       xit("should pause the song if is playing", function() {
@@ -58,7 +59,7 @@ describe("MusicStore.Utils", function() {
         var audioEl = element.find('audio').get(0)
         audioEl.fastSeek(audioEl.duration.toFixed(2))
 
-        expect(element.find('button').text()).toBe("P")
+        expect(element.hasClass('paused')).toBe(true)
       })
     })
 

@@ -4,9 +4,9 @@ angular.module('MusicStore.Utils', [])
     return {
       restrict: 'E',
       replace: true,
-      template: '<div class="audio-player">' +
+      template: '<div class="audio-player" ng-class="{\'playing\': playing, \'paused\': !playing}">' +
                   '<audio src="{{track.previewUrl}}"></audio>' +
-                  '<button id="playOrStop" ng-click="playOrStop()">P<button>' +
+                  '<button id="playOrStop" class="player-control" ng-click="playOrStop()"></button>' +
                 '</div>',
       scope: {
         track: '=track'
