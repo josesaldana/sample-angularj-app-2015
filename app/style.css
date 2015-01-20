@@ -22,10 +22,10 @@ body > header, body > footer {
 }
 
 .audio-player .player-control {
-  /*background-color: rgb(237, 235, 191);*x/
-  border: 0px none;
-  border-radius: 3px
+  background: rgb(237, 235, 191);
+  border: 0;
+  border-radius: 4px;
   width: 20px;
   height: 18px;
-  color: rgb(208, 217, 73)
+  color: rgb(208, 217, 73);
 }

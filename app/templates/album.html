@@ -18,6 +18,6 @@
 </article>
 
 <ul id="album-tracks" class="col-xs-12 col-md-5 list-unstyled" ng-repeat="track in album.tracks | orderBy: number">
-  <li>{{track.number}}. {{track.title}} <em>{{track.duration}}</em> <audio-control data-track="track"></audio-control></li>
+  <li>{{track.number}}. {{track.title}} <em>{{track.duration}}</em> <audio-player data-track="track"></audio-player></li>
 </ul>
 
