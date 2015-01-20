@@ -1,27 +1,49 @@
+// utils.js
+// --------
+// TODO: Finish 'paused' state, Move 'inline/block' mode to be configurable
+
 angular.module('MusicStore.Utils', [])
 
-  .directive('audioControl', function() {
+  .directive('audioPlayer', function() {
     return {
       restrict: 'E',
       replace: true,
-      template: '<div class="audio-player" ng-class="{\'playing\': playing, \'paused\': !playing}">' +
-                  '<audio src="{{track.previewUrl}}"></audio>' +
-                  '<button id="playOrStop" class="player-control" ng-click="playOrStop()"></button>' +
+      template: '<div class="audio-player inline" ng-class="{\'playing\': playing, \'paused\': !playing}">' +
+                  '<audio ng-src="{{track.previewUrl}}"></audio>' +
+                  '<button id="playOrStop" class="player-control glyphicon glyphicon-play" ng-click="playOrStop()"></button>' +
                 '</div>',
       scope: {
         track: '=track'
       },
-      controller: ['$scope', function($scope) {
-        var track = $scope.track
+      link: function(scope, element, attr) {
+        var audioEl = element.find('audio').get(0)
 
-        $scope.playOrStop = function() {
-          $scope.playing = ! $scope.playing
+        angular.element(audioEl)
+          .on('ended', function() {
+            element.toggleClass('stopped')
+          }) // To be completed
 
-          //TODO: Implementing HTML5 Audio playing
-        }
-      }],
-      link: function(scope, elements, attr) {
-        // TO Be finished: 
+        element.find('button').on('click', function() {
+          var playing = scope.playing || false
+
+          if(! playing) {
+            audioEl.play()
+            playing = true
+
+            element.toggleClass('playing')
+            element.find('button').removeClass('glyphicon-play').addClass('glyphicon-stop')
+          } else {
+            audioEl.pause()
+            playing = false
+
+            element.toggleClass('paused')
+            element.find('button').removeClass('glyphicon-stop').addClass('glyphicon-play')
+
+            audioEl.fastSeek(audioEl.duration)
+          }
+
+          scope.playing = playing
+        })
       }
     }
   })

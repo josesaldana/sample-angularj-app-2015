@@ -1,6 +1,6 @@
 // MusicStore App
 //
-angular.module('MusicStore', ['ngResource', 'ui.router'])
+angular.module('MusicStore', ['ngResource', 'ui.router', 'MusicStore.Utils'])
 
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/")

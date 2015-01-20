@@ -9,16 +9,16 @@
     "title": "Track 1 of Album #2",
     "number": 1,
     "duration": "04:02",
-    "previewUrl": "audio/al2tr1.mp3"
+    "previewUrl": "albums/al1/al1tr1.mp3"
   }, {
     "id": "al2-tr2",
     "title": "Track 2 of Album #2",
     "number": 2,
     "duration": "03:10",
-    "previewUrl": "audio/al2tr2.mp3"
+    "previewUrl": "albums/al1/al2tr2.mp3"
   }],
   "reviews": [{
-    "comment": "Excellent Album!",
+    "comment": "Thanks God for this album",
     "author": "jmsaldana@gmail.com"
   }]
 }

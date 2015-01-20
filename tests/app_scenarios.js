@@ -26,6 +26,7 @@ describe("Music Store", function() {
       element.all(by.css('.album')).first().click()
 
       expect(element(by.id('album-details')).getCssValue('visibility')).toBe('visible')
+      expect(element.all(by.css('.track .audio-player')).count()).toBeGreaterThan(0)
     })
 
   })
