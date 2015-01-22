@@ -14,10 +14,14 @@ describe("MusicStore", function() {
         Album = _Album_
     }))
 
+    afterEach(function() {
+      $httpBackend.resetExpectations()
+    })
+
     describe("AlbumsController", function() {
 
         it("should list all albums", function() {
-            $httpBackend.when('GET', '/albums/all.json').respond([{id: 'al1'}])
+            $httpBackend.expectGET('/albums/all.json').respond([{id: 'al1'}])
 
             var $scope = $rootScope.$new()
             var $state = {}
@@ -31,20 +35,21 @@ describe("MusicStore", function() {
             expect($scope.selectedAlbum).toBeUndefined()
         })
 
-        it("should open details panel when an album is clicked", function() {
+       it("should open details view when an album is clicked", function() {
             var $scope = $rootScope.$new()
             var controller = $controller('AlbumsController', {$scope: $scope, Album: Album})
 
-            var album = {id: 'al1', tracks: [{ id: 'al1-tr1'}]}
-            $httpBackend.when('GET', '/albums/al1.json').respond(album)
+            $httpBackend.expectGET('/albums/all.json').respond([{id: 'al1'}])
+            $httpBackend.expectGET('/albums/al1.json').respond({id: 'al1', tracks: [{ id: 'al1tr1'}]})
 
             controller.showDetails('al1')
+            $httpBackend.flush()
 
             expect($scope.showingDetails).toBe(true)
             expect($scope.selectedAlbum).toBe('al1')
 
             expect($scope.album.id).toBe('al1')
-            expect($scope.album.tracks.lenght).toBe(1)
+            expect($scope.album.tracks.length).toBe(1)
         })
 
     })
