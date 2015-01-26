@@ -1,21 +1,11 @@
 // MusicStore App
 //
-angular.module('MusicStore', ['ngResource', 'ui.router', 'MusicStore.Utils'])
-
-  .config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/")
-
-    $stateProvider
-      .state('index', {
-        url: "/",
-        templateUrl: "app/templates/all.html",
-        controller: 'AlbumsController'
-      })
-      .state('index.album', {
-        url: "/album",
-        templateUrl: "app/templates/album.html"
-      })
-  })
+angular.module('MusicStore', [
+               'ngResource', 
+               'MusicStore.App.Routes', 
+               'MusicStore.Utils',
+               'MusicStore.ShoppingCart'
+            ])
 
   .factory('Album', function($resource) {
     return $resource('/albums/:id.json', {}, {
@@ -23,10 +13,11 @@ angular.module('MusicStore', ['ngResource', 'ui.router', 'MusicStore.Utils'])
     });
   })
 
-  .controller('AlbumsController', function($scope, Album) {
+  .controller('StoreController', function($scope, Album, shoppingCart) {
     // All albums
     $scope.albums = []
     $scope.showingDetails = false
+    $scope.shoppingCart = shoppingCart
 
     Album.query(function(data) {
       $scope.albums = data
@@ -44,6 +35,19 @@ angular.module('MusicStore', ['ngResource', 'ui.router', 'MusicStore.Utils'])
       })
     }
 
+    this.addToCart = function(album) { 
+      shoppingCart.addItem(album)
+    }
+
     $scope.showDetails = this.showDetails
+    $scope.addToCart = this.addToCart
+  })
+  .controller('ShoppingCartController', function($scope, shoppingCart) {
+    $scope.shoppingCart = shoppingCart
+    $scope.totalAmount = _.reduce(shoppingCart.getItems(), function(total, item) {
+      total += item.donation || 0.00
+    })
+
+    //TODO: Add watch expression for items[*].donation and totalAmount
   })
 

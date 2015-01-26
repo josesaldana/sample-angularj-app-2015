@@ -7,9 +7,10 @@
     "app/components/angular-mocks/angular-mocks.js",
     "app/components/angular-resource/angular-resource.js",
     "app/components/angular-ui-router/release/angular-ui-router.min.js",
+    "app/components/lodash/dist/lodash.min.js",
+    "app/components/angular-lodash/angular-lodash.js",
     "app/*.js",
-    "tests/app_specs.js",
-    "tests/utils_specs.js"
+    "tests/*_specs.js"
   ],
 
   "src_files_ignore": [

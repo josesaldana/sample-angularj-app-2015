@@ -1,25 +1,27 @@
 <header>
   <hgroup>
-    <h1>{{album.title}}</h1>
-    <h3>{{album.author}}</h3>
+    <h1 id="album-title">{{album.title}}</h1>
+    <h3 id="album-author">{{album.author}}</h3>
   </hgroup>
 </header>
 
-<article class="album-summary col-xs-12 col-md-7">
-  <img ng-src="{{album.cover}}" />
-  <p>{{album.description}}</p>
+<section class="album-summary col-xs-12 col-md-7">
+  <img id="album-cover" ng-src="{{album.cover}}" />
+  <p id="album-description">{{album.description}}</p>
 
-  <ul id="reviews">
+  <ul id="album-reviews">
     <li ng-repeat="review in album.reviews">
       <p>{{review.comment}}</p>
       <p><em>{{review.author}}</em></p>
     </li>
   </ul>
-</article>
+</section>
 
-<ul id="album-tracks" class="col-xs-12 col-md-5 list-unstyled" ng-repeat="track in album.tracks | orderBy: number">
-  <li>{{track.number}}. {{track.title}} <em>{{track.duration}}</em> <audio-player data-track="track"></audio-player></li>
+<ul id="album-tracks" class="col-xs-12 col-md-5 list-unstyled" >
+  <li class="track" ng-repeat="track in album.tracks | orderBy: number">
+    {{track.number}}. {{track.title}} <em>{{track.duration}}</em> <audio-player data-track="track"></audio-player>
+  </li>
 </ul>
 
-<a href="" ui-sref="/checkout" class="btn btn-default">Get CD</a>
+<a href="" id="add-to-cart" ng-click="addToCart(album)" class="btn btn-default">Get Album</a>
 

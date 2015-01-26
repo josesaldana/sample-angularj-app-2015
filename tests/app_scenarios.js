@@ -1,6 +1,6 @@
 describe("Music Store", function() {
 
-  describe("Homepage", function() {
+  describe("Store page (Homepage)", function() {
     var homepage = 'http://localhost:3333/'
 
     beforeEach(function() {
@@ -20,41 +20,85 @@ describe("Music Store", function() {
       expect(element(by.id('album-details')).getCssValue('display')).toBe('none')
     })
 
-    it("should list albums by language", function() {
-      pending()
+    xit("should list albums by language", function() {
+      pending();
     })
 
-    it("should display an album details when an album is clicked", function() {
-      element.all(by.css('.album')).first().click()
+    describe("when clicking on an album", function() {
+      beforeEach(function() {
+        element.all(by.css('.album')).first().click()
+      })
 
-      expect(element(by.id('album-details')).getCssValue('visibility')).toBe('visible')
-      expect(element.all(by.css('.track .audio-player')).count()).toBeGreaterThan(0)
-    })
+      it("should display the details of the album", function() {
+        expect(element(by.id('album-details')).getCssValue('visibility')).toBe('visible')
 
-    describe("Album details", function () {
-      it("should display the details of an album", function() {
         // TODO: Improve these selectors (toBePresent)
-        expect(element.all(by.css('#album-details > #album-title').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-author').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-cover').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-description').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-reviews').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-tracks').count())).toBe(1)
-        expect(element.all(by.css('#album-details > #album-checkout').count())).toBe(1)
+        expect(element.all(by.css('#album-details #album-title')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #album-author')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #album-cover')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #album-description')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #album-reviews')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #album-tracks')).count()).toBe(1)
+        expect(element.all(by.css('#album-details #add-to-cart')).count()).toBe(1)
+
+        expect(element.all(by.css('.track .audio-player')).count()).toBeGreaterThan(0)
       })
 
-      describe("when clicking the checkout button", function() {
-        beforeEach(function() {
-          element.find('#album-details > #album-checkout').click()
-        })
+      describe("when the details is shown", function () {
 
-        it("should go to the checkout page", function() {
-          expect(browser.getLocationAbsUrl()).toMatch('/checkout$/')
-          pending()
+        describe("when adding the album to the shopping cart", function() {
+          beforeEach(function() {
+            element(by.id('add-to-cart')).click()
+          })
+
+          it("should update the status of the shopping cart showing that the item has been added", function() {
+            expect(element(by.css('#shopping-cart-indicator')).getCssValue('display')).toEqual('block')
+            expect(element(by.css('#shopping-cart-indicator #items-in-cart')).getText()).toEqual('1')
+          })
         })
       })
     })
 
+    describe("when having items in the shopping cart", function() {
+      beforeEach(function() {
+        element.all(by.css('.album a')).first().click()
+        element(by.id('add-to-cart')).click()
+      })
+
+      it("should show a short status of the shopping cart (items added)", function() {
+        expect(element(by.css('#shopping-cart-indicator')).getCssValue('display')).toEqual('block')
+        expect(element(by.css('#shopping-cart-indicator #items-in-cart')).getText()).toEqual('1')
+      })
+
+      describe("when clicking the 'Show Shopping Cart' button", function() {
+        beforeEach(function() {
+          element.all(by.css('#shopping-cart-indicator a')).first().click()
+        })
+
+        it("should go to the Shopping Cart page", function() {
+          expect(browser.getLocationAbsUrl()).toEqual('/shopping-cart')
+          expect(element.all(by.css('#shopping-cart header h1')).first().getText()).toEqual('Shopping Cart')
+        })
+
+        describe("when in in the Shopping Cart page", function() {
+
+          it("should list all items to be purchased", function() {
+            expect(element(by.id('products'))).not.toBeUndefined()
+
+            expect(element.all(by.css('#products .product')).count()).toBe(1)
+            expect(element.all(by.css('#products .product .description')).count()).toBe(1)
+            expect(element.all(by.css('#products .product .donation')).count()).toBe(1)
+
+            expect(element.all(by.css('#products #total-amount')).count()).toBe(1)
+          })
+
+          it("should have an option to proceed with checkout", function() {
+            expect(element(by.id('checkout'))).not.toBeUndefined()
+            expect(element(by.id('checkout')).getAttribute('href')).toEqual('/checkout')
+          })
+        })
+      })
+    })
   })
 
 })

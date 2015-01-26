@@ -1,7 +1,17 @@
+<!-- Shopping Cart -->
+<section id="shopping-cart-indicator" class="col-xs-12" ng-show="shoppingCart.getItems().length > 0">
+  <div class="pull-right fa fa-shopping-cart">
+    <a href="" ui-sref="shopping-cart">
+      (<span id="items-in-cart">{{shoppingCart.getItems().length}}</span>)
+    </a>
+  </div>
+</section>
+
+<!-- Albums list-->
 <section id="albums" class="col-xs-12" ng-class="{'col-md-4': showingDetails, 'col-md-12': !showingDetails}">
   <ul class="list-unstyled list-inline">
     <li ng-repeat="album in albums" class="album">
-      <a href ng-click="showDetails(album.id)" ui-sref=".album">
+      <a href="" ng-click="showDetails(album.id)" ui-sref=".album">
         <img ng-src="albums/{{album.thumbnail}}">
         <p>{{album.title}}</p>
       </a>
@@ -9,4 +19,5 @@
   </ul>
 </section>
 
+<!-- Album details -->
 <section id="album-details" ui-view="" class="col-xs-12 col-md-8" ng-show="showingDetails"></section>

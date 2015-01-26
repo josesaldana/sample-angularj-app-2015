@@ -1,0 +1,45 @@
+<section id="shopping-cart">
+  <header>
+    <hgroup>
+      <h2>Shopping Cart</h2>
+    </hgroup>
+  </header>
+
+  <form name="shopping-cart">
+    <table id="products" class="table table-stripped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Product</th>
+          <th>Donation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="product" ng-repeat="product in shoppingCart.getItems()">
+          <td>
+            <input type="checkbox" name="{{product.id}}-remove" class="remove-item" />
+          </td>
+          <td><span class="description">{{product.title}}</span></td>
+          <td>
+            <input type="text" name="{{product.id}}-donation" class="donation" ng-model="product.donation" value="(product.donation || 0.00) | currency">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button id="remove-from-cart" ng-click="removeFromCart(product)">
+              <span class="fa fa-trash" />
+            </button>
+          </td>
+          <td style="text-align: right">Total:</td>
+          <td id="total-amount"><strong>{{shoppingCart.getTotal()}}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+  <a id="checkout" href="" class="btn btn-primary" ui-sref=".checkout">Checkout</a> 
+  <br /><br/>
+  or <a href="#/">Continue selecting more albums</a>
+
+</section>
+
