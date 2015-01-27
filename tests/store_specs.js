@@ -53,20 +53,46 @@ describe("MusicStore", function() {
             expect($scope.album.id).toBe('al1')
             expect($scope.album.tracks.length).toBe(1)
         })
+    })
 
-        it("should add albums to the shopping cart", function() {
-          spyOn(shoppingCart, 'addItem')
+    describe("ShoppingCartController", function() {
 
-          var $scope = $rootScope.$new()
-          var controller = $controller('StoreController', {$scope: $scope, Album: Album, shoppingCart: shoppingCart})
+      it("should add albums to the shopping cart", function() {
+        spyOn(shoppingCart, 'addItem')
 
-          var album = { id: 'al1', price: 0.00 }
-          controller.addToCart(album)
+        var $scope = $rootScope.$new()
+        var controller = $controller('ShoppingCartController', {$scope: $scope, shoppingCart: shoppingCart})
 
-          expect(shoppingCart.addItem).toHaveBeenCalled()
-          expect(shoppingCart.addItem.calls.length).toEqual(1)
-        })
+        var album = { id: 'al1', donation: 0.00 }
+        controller.addToCart(album)
 
+        expect(shoppingCart.addItem).toHaveBeenCalled()
+        expect(shoppingCart.addItem.calls.length).toEqual(1)
+      })
+
+      it("should provide the items in the Shopping Cart", function() {
+        shoppingCart.addItem({ id: 'al1', donation: 0.00 })
+
+        var $scope = $rootScope.$new()
+        var controller = $controller('ShoppingCartController', {$scope: $scope, shoppingCart: shoppingCart})
+
+        expect($scope.items.length).toBe(1)
+      })
+
+      it("should update the shopping cart and the total amount when the donation amount changes", function() {
+        shoppingCart.addItem({ id: 'al1', donation: 5.00 })
+        shoppingCart.addItem({ id: 'al2'})
+
+        var $scope = $rootScope.$new()
+        var controller = $controller('ShoppingCartController', {$scope: $scope, shoppingCart: shoppingCart})
+
+        $scope.items[1].donation = 10.00
+        $scope.$digest()
+
+        expect($scope.items[0].donation).toEqual(5.00)
+        expect(shoppingCart.getItems()[0].donation).toEqual(5.00)
+        expect($scope.totalAmount).toEqual(15.00)
+      })
     })
 
 })

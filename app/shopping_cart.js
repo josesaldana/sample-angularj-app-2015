@@ -12,11 +12,14 @@ angular.module('MusicStore.ShoppingCart', ['angular-lodash'])
         //   item.quantity = 1
         //   items.push(item)
         // }
-        item.donation = null
+        item.donation = item.donation || null
         items.push(item)
       },
       getItems: function() {
         return items
+      },
+      getTotal: function() {
+        return _.reduce(items, function(total, item) { return total + (parseFloat(item.donation || 0)); }, 0.00)
       },
       clear: function() {
         while(items.length) items.pop()

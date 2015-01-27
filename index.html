@@ -20,6 +20,15 @@
           </hgroup>
         </header>
 
+        <!-- Shopping Cart -->
+        <section id="shopping-cart-indicator" class="col-xs-12" ng-controller="ShoppingCartController" ng-show="items.length > 0">
+          <div class="pull-right fa fa-shopping-cart">
+            <a href="" ui-sref="shopping-cart">
+              (<span id="items-in-cart">{{items.length}}</span>)
+            </a>
+          </div>
+        </section>
+
         <section id="main-content"  ui-view=""></section><!-- TODO: Move albums.html's <section> element here -->
 
         <footer class="col-xs-12">

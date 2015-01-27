@@ -26,16 +26,7 @@ describe("MusicStore.App.Routes", function() {
       expect($state.current.name).toEqual('index')
     })
   })
-
-  xdescribe("/checkout", function() {
-    beforeEach(mockTemplate.bind(null, 'app/templates/checkout.html'))
-
-    it("should redirect to the checkout page (w/ order details)", function() {
-      goTo("/checkout")
-      expect($state.current.name).toEqual('shopping-cart.checkout')
-    })
-  })
-
+ 
   describe("/shopping-cart", function() {
     beforeEach(mockTemplate.bind(null, 'app/templates/shopping-cart.html'))
 
@@ -45,8 +36,18 @@ describe("MusicStore.App.Routes", function() {
       expect($state.current.name).toEqual('shopping-cart')
       expect($state.current.templateUrl).toEqual('app/templates/shopping-cart.html')
       expect($state.current.controller).toEqual('ShoppingCartController')
+    }) 
+  })
+
+  describe("/shopping-cart/checkout", function() {
+    beforeEach(mockTemplate.bind(null, 'app/templates/checkout.html'))
+
+    it("should redirect to the checkout page (route)", function() {
+      goTo("/checkout")
+      expect($state.current.name).toEqual('shopping-cart.checkout')
     })
   })
+
 
   // ------- //
   // Helpers //

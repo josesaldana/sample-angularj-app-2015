@@ -1,8 +1,8 @@
 // MusicStore App
 //
 angular.module('MusicStore', [
-               'ngResource', 
-               'MusicStore.App.Routes', 
+               'ngResource',
+               'MusicStore.App.Routes',
                'MusicStore.Utils',
                'MusicStore.ShoppingCart'
             ])
@@ -35,19 +35,26 @@ angular.module('MusicStore', [
       })
     }
 
-    this.addToCart = function(album) { 
+    this.addToCart = function(album) {
       shoppingCart.addItem(album)
     }
 
     $scope.showDetails = this.showDetails
     $scope.addToCart = this.addToCart
   })
-  .controller('ShoppingCartController', function($scope, shoppingCart) {
-    $scope.shoppingCart = shoppingCart
-    $scope.totalAmount = _.reduce(shoppingCart.getItems(), function(total, item) {
-      total += item.donation || 0.00
-    })
 
-    //TODO: Add watch expression for items[*].donation and totalAmount
+  .controller('ShoppingCartController', function($scope, shoppingCart) {
+    $scope.items = shoppingCart.getItems()
+    $scope.totalAmount = shoppingCart.getTotal()
+
+    $scope.$watch('items', function(newItems, oldItems) {
+      $scope.totalAmount = shoppingCart.getTotal()
+    }, true)
+
+    this.addToCart = function(album) {
+      shoppingCart.addItem(album)
+    }
+
+    $scope.addToCart = this.addToCart
   })
 

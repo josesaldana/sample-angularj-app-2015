@@ -65,5 +65,17 @@ describe("MusicStore.ShoppingCart", function() {
     })
   })
 
+  describe("when requesting total", function() {
+    beforeEach(function() {
+      shoppingCart.addItem({id: 'al1', donation: null})
+      shoppingCart.addItem({id: 'al2', donation: 10.00})
+      shoppingCart.addItem({id: 'al3', donation: 4.00})
+    })
+
+    it("should provide it (the total amount for the shopping cart", function() {
+      expect(shoppingCart.getTotal()).toBe(14.00)
+    })
+  })
+
 })
 
