@@ -67,8 +67,11 @@ angular.module('MusicStore', [
     this.pay = function() {
       shoppingCart.pay()
 
-      if(shoppingCart.isPaid())
+      if(shoppingCart.isPaid()) {
+        shoppingCart.clear()
+
         $state.transitionTo('payment-success')
+      }
     }
 
     $scope.pay = this.pay

@@ -18,15 +18,15 @@ exports.config = {
   },
 
   onPrepare: function() {
-    // protractor.By.addLocator('siblingOf', function(findFrom, sibling, optParentEl, optRootEl) {
-    //   var using = optRootEl,
-    //       findFromEl = using.querySelectorAll(findFrom)
-    //       siblingEl = from.querySelectorAll(sibling)
+    protractor.By.addLocator('siblingOf', function(findFrom, sibling, optParentEl, optRootEl) {
+      var using = optRootEl,
+          findFromEl = using.querySelectorAll(findFrom)
+          siblingEl = findFromEl[0].querySelectorAll(sibling)
 
-    //   // return Array.prototype.filter.call(siblingEl, function(s) {
-    //   //   return s.className = sibling
-    //   // })
-    //   return document.body
-    // })
+      console.log(using)
+      return Array.prototype.filter.call(siblingEl, function(s) {
+        return s.className = sibling
+      })
+    })
   }
 };

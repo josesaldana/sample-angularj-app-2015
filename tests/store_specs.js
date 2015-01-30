@@ -93,7 +93,6 @@ describe("MusicStore", function() {
         expect(shoppingCart.getItems()[0].donation).toEqual(5.00)
         expect($scope.totalAmount).toEqual(15.00)
       })
-
     })
 
     describe("CheckoutController", function() {
@@ -101,13 +100,18 @@ describe("MusicStore", function() {
         var $scope = $rootScope.$new()
         var controller = $controller('CheckoutController', {$scope: $scope, shoppingCart: shoppingCart})
 
-        spyOn(shoppingCart, 'pay')
-        spyOn(shoppingCart, 'isPaid')
+        $scope.shippingInfo = { firstName: 'Jose', lastName: 'Saldana', address: 'Address', zip: '1234', city: 'Panama' }
+        $scope.paymentInfo = { creditCardType: 'VISA', creditCardNumber: '1234567890', expirationDate: { month: '02', year: '12' }}
 
-        controller.pay()
+        spyOn(shoppingCart, 'pay')
+        spyOn(shoppingCart, 'isPaid').andReturn(true)
+        spyOn(shoppingCart, 'clear')
+
+        controller.pay($scope.shippingInfo, $scope.paymentInfo)
 
         expect(shoppingCart.pay).toHaveBeenCalled()
         expect(shoppingCart.isPaid).toHaveBeenCalled()
+        expect(shoppingCart.clear).toHaveBeenCalled()
       })
     })
 

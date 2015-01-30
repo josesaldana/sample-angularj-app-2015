@@ -1,6 +1,6 @@
 <!-- Albums list-->
 <section id="albums" class="col-xs-12" ng-class="{'col-md-4': showingDetails, 'col-md-12': !showingDetails}">
-  <ul class="list-unstyled list-inline">
+  <ul id="albums-list" class="list-unstyled list-inline">
     <li ng-repeat="album in albums" class="album">
       <a href="" ng-click="showDetails(album.id)" ui-sref=".album">
         <img ng-src="albums/{{album.thumbnail}}">

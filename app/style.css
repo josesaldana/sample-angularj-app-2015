@@ -34,11 +34,16 @@ body > header, body > footer {
   color: rgb(208, 217, 73);
 }
 
-form[name="payment-form"] .form-group.expiration-date label {
+
+form[name="shoppingCart"] .form-group input.form-control  {
+  width: 20%;
+}
+
+form[name="paymentForm"] .form-group.expiration-date label {
   display: block;
 }
 
-form[name="payment-form"] .form-group.expiration-date input {
+form[name="paymentForm"] .form-group.expiration-date input {
   display: inline;
   width: 15%;
 }

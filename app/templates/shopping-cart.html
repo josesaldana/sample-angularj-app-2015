@@ -21,8 +21,8 @@
             <input type="checkbox" name="{{product.id}}-remove" class="remove-item" />
           </td>
           <td><span class="description">{{product.title}}</span></td>
-          <td>
-            <input type="text" name="{{product.id}}_donation" class="donation" ng-model="product.donation" value="(product.donation || 0.00) | currency" required> <span ng-show="! shoppingCart.$valid && shoppingCart.{{product.id}}_donation.$error.required && shoppingCart.$submitted" class="error">*</span>
+          <td class="form-group">
+            <input type="text" name="{{product.id}}_donation" class="form-control donation" ng-model="product.donation" value="(product.donation || 0.00) | currency" required> <span ng-show="! shoppingCart.$valid && shoppingCart.{{product.id}}_donation.$error.required && shoppingCart.$submitted" class="error">*</span>
             <span ng-show="! shoppingCart.$valid && shoppingCart.{{product.id}}_donation.$error.required && shoppingCart.$submitted" class="error">*</span>
           </td>
         </tr>

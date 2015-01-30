@@ -32,7 +32,6 @@ describe("Music Store", function() {
       it("should display the details of the album", function() {
         expect(element(by.id('album-details')).getCssValue('visibility')).toBe('visible')
 
-        // TODO: Improve these selectors (isPresent)
         expect(element(by.id('album-title')).isPresent()).toBe(true)
         expect(element.all(by.css('#album-details #album-author')).count()).toBe(1)
         expect(element.all(by.css('#album-details #album-cover')).count()).toBe(1)
@@ -108,11 +107,11 @@ describe("Music Store", function() {
           describe("when not entering donation values and submitting the form", function() {
             beforeEach(function() {
               element.all(by.css('#products input.donation')).first().sendKeys('')
-              element(by.css('form[name=shoppingCart]')).submit()
+              element(by.buttonText('Checkout')).click()
             })
 
             it("should display an error message", function() {
-              var error = element.all(by.css('#products input.donation')).first().element(by.xpath('..')).element(by.css('.error'))
+              var error = element.all(by.css('#products input.donation')).first().element(by.xpath('..')).element(by.className('error'))
 
               expect(error.getText()).toEqual('*')
               expect(error.getCssValue('display')).toEqual('inline')
@@ -123,7 +122,7 @@ describe("Music Store", function() {
         describe("when proceeding to pay", function() {
           beforeEach(function() {
             element.all(by.css('#products input.donation')).first().sendKeys('12')
-            element(by.css('form[name=shoppingCart]')).submit()
+            element(by.buttonText('Checkout')).click()
           })
 
           it("should display the checkout form", function() {
@@ -145,32 +144,21 @@ describe("Music Store", function() {
 
           describe("when paying (after entering incorrect values in the payment form)", function() {
             beforeEach(function() {
-              by.addLocator('siblingOf', function(findFrom, sibling, optParentEl, optRootEl) {
-                var using = optRootEl,
-                    findFromEl = using.querySelectorAll(findFrom)
-                    siblingEl = findFromEl[0].querySelectorAll(sibling)
-
-                return Array.prototype.filter.call(siblingEl, function(s) {
-                  return s.className = sibling
-                })
-              })
-
               element.all(by.css('form[name=paymentForm] input[name=firstName]')).first().sendKeys('')
               element.all(by.css('form[name=paymentForm] input[name=lastName]')).first().sendKeys('')
               element.all(by.css('form[name=paymentForm] input[name=address]')).first().sendKeys('')
               element.all(by.css('form[name=paymentForm] input[name=zip]')).first().sendKeys('1234')
               element.all(by.css('form[name=paymentForm] input[name=city]')).first().sendKeys('Panama')
 
-              element(by.css('form[name=paymentForm')).submit()
+              element(by.buttonText('Complete Donation')).click()
             })
 
             it("should not proceed with payment and show form errors", function() {
-              expect(element(by.siblingOf('form[name=paymentForm input.firstName', '.error')).getCssValue('display')).toEqual('inline')
-              // var el = element(by.siblingOf('form[name=paymentForm input.firstName', '.error'))
+              expect(element.all(by.css('form[name=paymentForm] .form-group.has-error')).count()).toBe(6)
             })
           })
 
-          xdescribe("when paying (after entering correct values in the payment form)", function() {
+          describe("when paying (after entering correct values in the payment form)", function() {
             beforeEach(function() {
               element.all(by.css('form[name=paymentForm] input[name=firstName]')).first().sendKeys('Jose')
               element.all(by.css('form[name=paymentForm] input[name=lastName]')).first().sendKeys('Saldana')
@@ -178,13 +166,32 @@ describe("Music Store", function() {
               element.all(by.css('form[name=paymentForm] input[name=zip]')).first().sendKeys('1234')
               element.all(by.css('form[name=paymentForm] input[name=city]')).first().sendKeys('Panama')
 
-              element.all(by.css('form[name=paymentForm]')).first().submit()
+              // Clicking VISA credit card in creditCardTypes HTMLSelect element
+              browser.findElement(by.css('form[name=paymentForm] select[name=creditCardType]')).findElements(by.tagName('option')).then(function(options) { options[1].click() })
+
+              element.all(by.css('form[name=paymentForm] input[name=creditCardNumber]')).first().sendKeys('1234567890')
+              element.all(by.css('form[name=paymentForm] input[name=expirationMonth]')).first().sendKeys('05')
+              element.all(by.css('form[name=paymentForm] input[name=expirationYear]')).first().sendKeys('12')
+
+              element(by.buttonText('Complete Donation')).click()
             })
 
             it("should process the payment and display a success message with instructions to download the album", function () {
               expect(browser.getLocationAbsUrl()).toContain('/payment-success')
-              expect(element(by.css('#payment-success header h2')).getText()).toEqual('Payment success')
+              expect(element(by.css('#payment-success header h2')).getText()).toEqual('Payment Success')
               expect(element(by.css('#download-instructions header h4')).getText()).toEqual('Download instructions')
+            })
+
+            it("should have an option to continue browsing the store", function() {
+              expect(element(by.linkText('Continue browsing the store')).isPresent()).toBe(true)
+            })
+
+            describe("when clicking the 'Continue browsing the store' link", function() {
+              it("should go to the store page (Main page)", function() {
+                element(by.linkText('Continue browsing the store')).click()
+
+                expect(element(by.id('albums-list')).isPresent()).toBe(true)
+              })
             })
           })
         })
@@ -193,3 +200,4 @@ describe("Music Store", function() {
   })
 
 })
+
