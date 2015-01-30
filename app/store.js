@@ -64,8 +64,8 @@ angular.module('MusicStore', [
   })
 
   .controller('CheckoutController', function($scope, shoppingCart, $state) {
-    this.pay = function() {
-      shoppingCart.pay()
+    this.pay = function(shippingInfo, paymentInfo) {
+      shoppingCart.pay(shippingInfo, paymentInfo)
 
       if(shoppingCart.isPaid()) {
         shoppingCart.clear()
