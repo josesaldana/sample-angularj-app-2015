@@ -96,6 +96,46 @@ describe("MusicStore.Utils", function() {
     })
 
   })
+
+  describe('directive: validateAndSubmit', function() {
+    var element, scope
+
+    beforeEach(inject(function($compile, $rootScope, $injector, $controller) {
+      scope = $rootScope.$new()
+
+      scope.afterValidation = function() { }
+      spyOn(scope, 'afterValidation')
+
+      var form = "<form do-after-validation='afterValidation()' novalidate>" +
+                    "<input ng-model='test' type='text' required />" + 
+                    "<input type='type' value='Submit' />" + 
+                  "</form>"
+
+      element = $compile(form)(scope)
+      scope.$digest()
+    }))
+
+    describe("when having the form invalid", function() {
+      it('should not call the function to execute', function() {
+        element.find('input[type=text]').val('')
+        element.find('input[type=text]').trigger('input')
+        element.submit()
+
+        expect(scope.afterValidation).not.toHaveBeenCalled()
+      })
+    })
+
+    describe("when having a valid form", function() {
+      it('should call the function to execute', function() {
+        element.find('input[type=text]').val('value')
+        element.find('input[type=text]').trigger('input')
+        element.submit()
+
+        expect(scope.afterValidation).toHaveBeenCalled()
+      })
+    })
+
+  })
 })
 
 

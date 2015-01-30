@@ -93,6 +93,22 @@ describe("MusicStore", function() {
         expect(shoppingCart.getItems()[0].donation).toEqual(5.00)
         expect($scope.totalAmount).toEqual(15.00)
       })
+
+    })
+
+    describe("CheckoutController", function() {
+      it("should process the checkout and redirect to a success page", function() {
+        var $scope = $rootScope.$new()
+        var controller = $controller('CheckoutController', {$scope: $scope, shoppingCart: shoppingCart})
+
+        spyOn(shoppingCart, 'pay')
+        spyOn(shoppingCart, 'isPaid')
+
+        controller.pay()
+
+        expect(shoppingCart.pay).toHaveBeenCalled()
+        expect(shoppingCart.isPaid).toHaveBeenCalled()
+      })
     })
 
 })

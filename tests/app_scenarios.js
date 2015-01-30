@@ -93,8 +93,8 @@ describe("Music Store", function() {
           })
 
           it("should have an option to proceed with checkout", function() {
-            expect(element(by.id('checkout'))).not.toBeUndefined()
-            expect(element(by.id('checkout')).getAttribute('href')).toEqual('/checkout')
+            expect(element(by.css('form[name=shoppingCart] input[type=submit]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=shoppingCart] input[type=submit]')).getAttribute('value')).toContain('Checkout')
           })
 
           describe("when updating the amount of an item", function() {
@@ -104,29 +104,85 @@ describe("Music Store", function() {
               expect(element.all(by.css('#total-amount strong')).first().getText()).toEqual('$12.00')
             })
           })
+
+          describe("when not entering donation values and submitting the form", function() {
+            beforeEach(function() {
+              element.all(by.css('#products input.donation')).first().sendKeys('')
+              element(by.css('form[name=shoppingCart]')).submit()
+            })
+
+            it("should display an error message", function() {
+              var error = element.all(by.css('#products input.donation')).first().element(by.xpath('..')).element(by.css('.error'))
+
+              expect(error.getText()).toEqual('*')
+              expect(error.getCssValue('display')).toEqual('inline')
+            })
+          })
         })
 
         describe("when proceeding to pay", function() {
-          it("should display the checkout form", function() {
-            element(by.id('checkout')).click()
-
-            expect(element(by.id('payment')).getCssValue('display')).toBe('block')
+          beforeEach(function() {
+            element.all(by.css('#products input.donation')).first().sendKeys('12')
+            element(by.css('form[name=shoppingCart]')).submit()
           })
 
-          describe("when paying (after entering correct values in the payment form)", function() {
-            beforeEach(function() {
-              element.all(by.css('form[name=payment-form] input.firstName')).first().sendKeys('Jose')
-              element.all(by.css('form[name=payment-form] input.lastName')).first().sendKeys('Saldana')
-              element.all(by.css('form[name=payment-form] input.address')).first().sendKeys('Bda. Nueva Esperanza')
-              element.all(by.css('form[name=payment-form] input.zip')).first().sendKeys('1234')
-              element.all(by.css('form[name=payment-form] input.city')).first().sendKeys('Panama')
+          it("should display the checkout form", function() {
+            expect(element(by.id('payment')).getCssValue('display')).toBe('block')
 
-              element.all(by.css('form[name=payment-form]')).first().submit()
+            expect(element(by.css('form[name=paymentForm] input[name=firstName]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=lastName]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=address]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=zip]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=city]')).isPresent()).toBe(true)
+
+            expect(element(by.css('form[name=paymentForm] select[name=creditCardType]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=creditCardNumber]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=expirationMonth]')).isPresent()).toBe(true)
+            expect(element(by.css('form[name=paymentForm] input[name=expirationYear]')).isPresent()).toBe(true)
+
+            expect(element(by.css('form[name=paymentForm] input[type=submit]')).isPresent()).toBe(true)
+          })
+
+          describe("when paying (after entering incorrect values in the payment form)", function() {
+            beforeEach(function() {
+              by.addLocator('siblingOf', function(findFrom, sibling, optParentEl, optRootEl) {
+                var using = optRootEl,
+                    findFromEl = using.querySelectorAll(findFrom)
+                    siblingEl = findFromEl[0].querySelectorAll(sibling)
+
+                return Array.prototype.filter.call(siblingEl, function(s) {
+                  return s.className = sibling
+                })
+              })
+
+              element.all(by.css('form[name=paymentForm] input[name=firstName]')).first().sendKeys('')
+              element.all(by.css('form[name=paymentForm] input[name=lastName]')).first().sendKeys('')
+              element.all(by.css('form[name=paymentForm] input[name=address]')).first().sendKeys('')
+              element.all(by.css('form[name=paymentForm] input[name=zip]')).first().sendKeys('1234')
+              element.all(by.css('form[name=paymentForm] input[name=city]')).first().sendKeys('Panama')
+
+              element(by.css('form[name=paymentForm')).submit()
             })
 
-            // Order paid 
+            it("should not proceed with payment and show form errors", function() {
+              expect(element(by.siblingOf('form[name=paymentForm input.firstName', '.error')).getCssValue('display')).toEqual('inline')
+              // var el = element(by.siblingOf('form[name=paymentForm input.firstName', '.error'))
+            })
+          })
+
+          xdescribe("when paying (after entering correct values in the payment form)", function() {
+            beforeEach(function() {
+              element.all(by.css('form[name=paymentForm] input[name=firstName]')).first().sendKeys('Jose')
+              element.all(by.css('form[name=paymentForm] input[name=lastName]')).first().sendKeys('Saldana')
+              element.all(by.css('form[name=paymentForm] input[name=address]')).first().sendKeys('Bda. Nueva Esperanza')
+              element.all(by.css('form[name=paymentForm] input[name=zip]')).first().sendKeys('1234')
+              element.all(by.css('form[name=paymentForm] input[name=city]')).first().sendKeys('Panama')
+
+              element.all(by.css('form[name=paymentForm]')).first().submit()
+            })
+
             it("should process the payment and display a success message with instructions to download the album", function () {
-              expect(browser.getLocationAbsUrl()).toEqual('/payment-success')
+              expect(browser.getLocationAbsUrl()).toContain('/payment-success')
               expect(element(by.css('#payment-success header h2')).getText()).toEqual('Payment success')
               expect(element(by.css('#download-instructions header h4')).getText()).toEqual('Download instructions')
             })

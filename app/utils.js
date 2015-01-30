@@ -48,3 +48,21 @@ angular.module('MusicStore.Utils', [])
     }
   })
 
+  .directive('doAfterValidation', ['$parse', function($parse) {
+    return {
+      restrict: 'A',
+      require: 'form',
+      link: function(scope, elem, attrs, ctrl) {
+        var fn = $parse(attrs.doAfterValidation)
+
+        elem.bind('submit', function(event) {
+          if( ! ctrl.$valid) return false;
+
+          scope.$apply(function() {
+            fn(scope, {$event:event})
+          })
+        })
+      }
+    }
+  }])
+

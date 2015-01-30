@@ -1,9 +1,12 @@
 angular.module('MusicStore.ShoppingCart', ['angular-lodash'])
 
   .service('shoppingCart', function() {
-    var items = []
+    var items = [],
+        totalAmount = 0.0
+        paid = false
 
     return {
+
       addItem: function(item) {
         // if(_.some(items, {id: item.id}))
         //   _.find(items, {id: item.id}).quantity += 1
@@ -15,14 +18,31 @@ angular.module('MusicStore.ShoppingCart', ['angular-lodash'])
         item.donation = item.donation || null
         items.push(item)
       },
+
       getItems: function() {
         return items
       },
+
       getTotal: function() {
-        return _.reduce(items, function(total, item) { return total + (parseFloat(item.donation || 0)); }, 0.00)
+        return totalAmount = _.reduce(items, function(total, item) { return total + (parseFloat(item.donation || 0)); }, 0.00)
       },
+
       clear: function() {
         while(items.length) items.pop()
+      },
+
+      pay: function() {
+        if( !paid  && items.length < 1)
+          throw "Cannot proceed with payment"
+
+        // TODO: Process payment 
+
+        paid = true
+      },
+
+      isPaid: function() {
+        return paid
       }
     }
   })
+

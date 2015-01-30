@@ -15,5 +15,18 @@ exports.config = {
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
+  },
+
+  onPrepare: function() {
+    // protractor.By.addLocator('siblingOf', function(findFrom, sibling, optParentEl, optRootEl) {
+    //   var using = optRootEl,
+    //       findFromEl = using.querySelectorAll(findFrom)
+    //       siblingEl = from.querySelectorAll(sibling)
+
+    //   // return Array.prototype.filter.call(siblingEl, function(s) {
+    //   //   return s.className = sibling
+    //   // })
+    //   return document.body
+    // })
   }
 };

@@ -43,9 +43,10 @@ angular.module('MusicStore', [
     $scope.addToCart = this.addToCart
   })
 
-  .controller('ShoppingCartController', function($scope, shoppingCart) {
+  .controller('ShoppingCartController', function($scope, shoppingCart, $state) {
     $scope.items = shoppingCart.getItems()
     $scope.totalAmount = shoppingCart.getTotal()
+    $scope.shoppingCartIsValid = false
 
     $scope.$watch('items', function(newItems, oldItems) {
       $scope.totalAmount = shoppingCart.getTotal()
@@ -55,6 +56,21 @@ angular.module('MusicStore', [
       shoppingCart.addItem(album)
     }
 
-    $scope.addToCart = this.addToCart
+    this.checkout = function() {
+      $state.transitionTo('shopping-cart.checkout')
+    }
+
+    $scope.checkout = this.checkout
+  })
+
+  .controller('CheckoutController', function($scope, shoppingCart, $state) {
+    this.pay = function() {
+      shoppingCart.pay()
+
+      if(shoppingCart.isPaid())
+        $state.transitionTo('payment-success')
+    }
+
+    $scope.pay = this.pay
   })
 

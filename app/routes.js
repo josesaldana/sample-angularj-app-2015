@@ -18,4 +18,13 @@ angular.module('MusicStore.App.Routes', ['ui.router'])
         templateUrl: "app/templates/shopping-cart.html",
         controller: 'ShoppingCartController'
       })
+      .state('shopping-cart.checkout', {
+        url: '/checkout',
+        templateUrl: "app/templates/checkout.html",
+        controller: 'CheckoutController'
+      })
+      .state('payment-success', {
+        url: '/payment-success',
+        templateUrl: "app/templates/payment-success.html"
+      })
   })

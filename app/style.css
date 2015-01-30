@@ -12,6 +12,10 @@ body > header, body > footer {
   }
 }
 
+.error {
+  color: red;
+}
+
 .album {
   padding: 5px;
   text-align: center;
@@ -29,3 +33,13 @@ body > header, body > footer {
   height: 18px;
   color: rgb(208, 217, 73);
 }
+
+form[name="payment-form"] .form-group.expiration-date label {
+  display: block;
+}
+
+form[name="payment-form"] .form-group.expiration-date input {
+  display: inline;
+  width: 15%;
+}
+

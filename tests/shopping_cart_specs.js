@@ -77,5 +77,28 @@ describe("MusicStore.ShoppingCart", function() {
     })
   })
 
+  describe("when proceeding to pay", function() {
+
+    it("should process the payment of the cart", function() {
+      shoppingCart.addItem({id: 'al1', donation: null})
+
+      shoppingCart.pay()
+
+      expect(shoppingCart.isPaid()).toBe(true)
+    })
+
+    it("should throw an error when there is no items in the cart", function() {
+      expect(shoppingCart.pay).toThrow()
+    })
+
+    xit("should not be paid twice", function() {
+      shoppingCart.addItem({id: 'al1', donation: null})
+      shoppingCart.pay()
+
+      expect(shoppingCart.pay).toThrow()
+    })
+
+  })
+
 })
 
