@@ -10,6 +10,10 @@ body > header, body > footer {
     width: 72%;
     margin: 0 auto;
   }
+
+  #shopping-cart-indicator a {
+    margin-right: 16%;
+  }
 }
 
 .error {
@@ -33,7 +37,6 @@ body > header, body > footer {
   height: 18px;
   color: rgb(208, 217, 73);
 }
-
 
 form[name="shoppingCart"] .form-group input.form-control  {
   width: 20%;
