@@ -1,5 +1,5 @@
 # MusicStore
-## Angular JS Training at ADMIOS
+## Sample AngularJS app
 
 Basic online store application implemented in [Angular JS](https://angularjs.org) (frontend with dummy data only).
 
